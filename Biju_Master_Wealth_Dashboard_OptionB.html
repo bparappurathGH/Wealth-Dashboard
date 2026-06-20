@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Biju Parappurath | Master Wealth Dashboard</title>
+<style>
+:root{
+  --dark:#7C2D12; --mid:#C2410C; --light:#FED7AA; --pale:#FFF7ED;
+  --bg:#FAFAF9; --nav:#111827; --ink:#1C1917; --muted:#78716C;
+  --green:#15803D; --red:#B91C1C; --amber:#B45309; --line:#E7E5E4;
+  --card:#FFFFFF; --shadow:0 8px 24px rgba(0,0,0,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:#0B1120;color:#fff;padding:18px 20px 16px}
+.header-row{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+h1{margin:0 0 6px;font-size:24px;letter-spacing:.2px}
+.sub{color:#CBD5E1;font-size:14px}
+.version{background:#1F2937;border:1px solid #334155;border-radius:999px;padding:7px 12px;font-size:12px;color:#FED7AA}
+.pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.pill{background:#111827;border:1px solid #334155;border-radius:999px;padding:9px 13px;font-size:13px}
+.pill b{color:#FED7AA}
+.tabs{display:flex;overflow-x:auto;background:var(--nav);position:sticky;top:0;z-index:10}
+.tabs button{border:0;background:transparent;color:white;padding:14px 18px;white-space:nowrap;cursor:pointer;font-weight:600}
+.tabs button.active{background:var(--mid)}
+main{padding:18px;max-width:1320px;margin:0 auto}
+.panel{display:none}.panel.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.grid.two{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border-radius:16px;padding:16px;box-shadow:var(--shadow);border:1px solid #F5F5F4;margin-bottom:16px}
+.card.accent{border-left:6px solid var(--mid)}
+.card.redline{border-left:6px solid var(--red);background:#FFF1F2}
+.card.amberline{border-left:6px solid var(--amber);background:#FFFBEB}
+h2{margin:4px 0 14px;font-size:20px}
+h3{margin:0 0 12px;font-size:16px}
+.stat-title{font-size:12px;text-transform:uppercase;color:var(--muted);font-weight:700;letter-spacing:.5px}
+.stat-value{font-size:24px;font-weight:800;margin-top:6px;color:var(--dark)}
+.small{font-size:12px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{padding:10px;text-align:left;text-transform:uppercase;font-size:11px;color:#78716C;letter-spacing:.5px;background:#FAFAF9}
+td{padding:11px 10px;border-top:1px solid var(--line);vertical-align:top}
+tr:hover td{background:#FFF7ED}
+.total td{font-weight:800;background:var(--pale)!important}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.badge{display:inline-flex;align-items:center;padding:4px 9px;border-radius:999px;font-size:11px;color:white;font-weight:800}
+.green{background:var(--green)}.red{background:var(--red)}.amber{background:var(--amber)}.dark{background:var(--dark)}
+.label{display:inline-block;color:white;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:800;margin:8px 0 12px}
+.progress{height:18px;border-radius:999px;background:#E7E5E4;overflow:hidden}
+.progress>div{height:100%;background:linear-gradient(90deg,var(--mid),var(--dark));width:4.2%}
+.action-item{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-top:1px solid var(--line)}
+.action-title{font-weight:800}
+.tag{border-radius:999px;padding:5px 8px;font-size:11px;font-weight:800;white-space:nowrap}
+.tag.red{background:#FEE2E2;color:var(--red)}.tag.amber{background:#FEF3C7;color:var(--amber)}.tag.green{background:#DCFCE7;color:var(--green)}
+input{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:white;margin-top:5px}
+.formgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+button.primary{background:var(--mid);color:white;border:0;border-radius:12px;padding:11px 16px;font-weight:800;cursor:pointer}
+.note{background:#F8FAFC;border-left:5px solid #334155;padding:12px;border-radius:12px;color:#334155}
+@media(max-width:640px){
+  .grid,.grid.two,.formgrid{grid-template-columns:1fr}
+  .pills{display:none}
+  h1{font-size:20px}
+  main{padding:12px}
+  table{font-size:13px}
+  th,td{padding:9px 7px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-row">
+    <div>
+      <h1>Biju Parappurath — Master Wealth Dashboard</h1>
+      <div class="sub">Dubai-based NRI | India + Global Portfolio | Age 46 | Target retirement age 55</div>
+    </div>
+    <div class="version">Option B • v1.0 • Updated 20 Jun 2026</div>
+  </div>
+  <div class="pills">
+    <div class="pill"><b>Total Personal Net Worth</b> ~₹2.85Cr*</div>
+    <div class="pill"><b>India Portfolio</b> ~₹42L</div>
+    <div class="pill"><b>Global Portfolio</b> ~$53k</div>
+    <div class="pill"><b>India SIP</b> ~₹1.21L/mo</div>
+    <div class="pill"><b>UAE Cash</b> AED 89k</div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="active" onclick="showTab('overview',this)">Overview</button>
+  <button onclick="showTab('india',this)">India</button>
+  <button onclick="showTab('iciciNre',this)">ICICI NRE</button>
+  <button onclick="showTab('iciciNro',this)">ICICI NRO</button>
+  <button onclick="showTab('hdfc',this)">HDFC MF</button>
+  <button onclick="showTab('mosl',this)">Motilal</button>
+  <button onclick="showTab('global',this)">Global</button>
+  <button onclick="showTab('uae',this)">UAE</button>
+  <button onclick="showTab('actions',this)">Actions</button>
+  <button onclick="showTab('calc',this)">Calculator</button>
+</nav>
+
+<main>
+<section id="overview" class="panel active">
+  <div class="grid">
+    <div class="card accent"><div class="stat-title">India Goal</div><div class="stat-value">₹10Cr</div><div class="small">9–10 year target</div></div>
+    <div class="card accent"><div class="stat-title">Current India</div><div class="stat-value">~₹42L</div><div class="small">Planning estimate incl. cash</div></div>
+    <div class="card accent"><div class="stat-title">Global Target</div><div class="stat-value">$500k+</div><div class="small">Stretch toward ₹5Cr</div></div>
+    <div class="card accent"><div class="stat-title">Liquidity Target</div><div class="stat-value">AED 100–150k</div><div class="small">UAE emergency reserve</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Platform Snapshot</h2>
+    <table>
+      <tr><th>Platform</th><th class="num">Current Value</th><th class="num">Monthly SIP / Plan</th><th>Status</th></tr>
+      <tr><td>ICICI Direct Ecosystem</td><td class="num">₹20.75L</td><td class="num">₹48k approx.</td><td><span class="badge green">Core</span></td></tr>
+      <tr><td>HDFC MF Direct</td><td class="num">~₹3.9L</td><td class="num">₹20k</td><td><span class="badge green">Build</span></td></tr>
+      <tr><td>Motilal Oswal</td><td class="num">~₹7.11L</td><td class="num">Opportunistic</td><td><span class="badge green">Alpha engine</span></td></tr>
+      <tr><td>SBI / Bandhan / Canara / ULIP</td><td class="num">~₹7.0L</td><td class="num">₹41.7k incl. ULIP</td><td><span class="badge amber">Monitor</span></td></tr>
+      <tr><td>Global Portfolio</td><td class="num">~$53k</td><td class="num">$1k–2k target</td><td><span class="badge green">Scale</span></td></tr>
+      <tr><td>UAE Cash + Property Equity</td><td class="num">AED 89k cash + AED 800k equity*</td><td class="num">Maintain cash</td><td><span class="badge amber">Liquidity</span></td></tr>
+      <tr class="total"><td>Total Personal Net Worth</td><td class="num">~₹2.85Cr*</td><td class="num">Excludes wife’s 50% property share</td><td>Planning basis</td></tr>
+    </table>
+    <p class="small">*Property equity counted only at 50% personal share. Values are based on current working assumptions from your screenshots and comments.</p>
+  </div>
+
+  <div class="grid two">
+    <div class="card">
+      <h3>Progress to ₹10Cr India Goal</h3>
+      <div class="progress"><div></div></div>
+      <p><b>~4.2%</b> of target achieved on planning corpus of ₹42L.</p>
+    </div>
+    <div class="card amberline">
+      <h3>Kai’s CIO Corner</h3>
+      <p><b>Highest conviction:</b> Annual 10% SIP step-up from Jan 2027.</p>
+      <p><b>Biggest risk:</b> Too much cash sitting idle once UAE liquidity crosses AED 150k.</p>
+      <p><b>Next review:</b> ETF clean-up and Motilal stock deployment only on dips.</p>
+    </div>
+  </div>
+</section>
+
+<section id="india" class="panel">
+  <div class="card">
+    <h2>India Portfolio Strategy</h2>
+    <table>
+      <tr><th>Bucket</th><th class="num">Value / SIP</th><th>Role</th><th>Status</th></tr>
+      <tr><td>Core Flexicap</td><td class="num">Parag + HDFC</td><td>Long-term compounding</td><td><span class="badge green">Keep building</span></td></tr>
+      <tr><td>Mid / Small Cap</td><td class="num">HDFC / Kotak / Nippon</td><td>Growth accelerator</td><td><span class="badge green">Critical</span></td></tr>
+      <tr><td>ETFs</td><td class="num">~₹28k/mo</td><td>Passive growth + hedge</td><td><span class="badge amber">Optimise</span></td></tr>
+      <tr><td>Direct Stocks</td><td class="num">~₹7.11L</td><td>Alpha engine</td><td><span class="badge green">Scale selectively</span></td></tr>
+      <tr><td>Cash</td><td class="num">~₹8.8L</td><td>Opportunity reserve</td><td><span class="badge amber">Do not rush</span></td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="iciciNre" class="panel">
+  <span class="label green">Active SIPs</span>
+  <div class="card"><table>
+    <tr><th>Holding</th><th class="num">SIP</th><th>Type</th><th>Status</th></tr>
+    <tr><td>Parag Parikh Flexi Cap</td><td class="num">₹10,000</td><td>MF</td><td><span class="badge green">Core</span></td></tr>
+    <tr><td>Kotak Mid Cap</td><td class="num">₹5,000</td><td>MF</td><td><span class="badge green">Growth</span></td></tr>
+    <tr><td>ICINEXT</td><td class="num">₹10,000</td><td>ETF</td><td><span class="badge green">Core ETF</span></td></tr>
+    <tr><td>ICIMID</td><td class="num">₹4,000</td><td>ETF</td><td><span class="badge green">Growth ETF</span></td></tr>
+    <tr><td>ICIGOL / Gold ETF</td><td class="num">₹4,000</td><td>ETF</td><td><span class="badge amber">Consolidate</span></td></tr>
+    <tr class="total"><td>Total</td><td class="num">₹33,000</td><td colspan="2">Monthly equivalent</td></tr>
+  </table></div>
+</section>
+
+<section id="iciciNro" class="panel">
+  <span class="label green">Active SIPs</span>
+  <div class="card"><table>
+    <tr><th>Holding</th><th class="num">SIP</th><th>Type</th><th>Status</th></tr>
+    <tr><td>Nippon Growth Midcap</td><td class="num">₹5,000</td><td>MF</td><td><span class="badge green">Keep</span></td></tr>
+    <tr><td>ICI150</td><td class="num">₹5,000</td><td>ETF</td><td><span class="badge green">Keep</span></td></tr>
+    <tr><td>GOLDEX</td><td class="num">₹5,000</td><td>ETF</td><td><span class="badge green">Gold retained</span></td></tr>
+    <tr class="total"><td>Total</td><td class="num">₹15,000</td><td colspan="2">Monthly equivalent</td></tr>
+  </table></div>
+  <div class="card amberline"><b>NRO cash:</b> ~₹2.4L powder money. Hold for correction; no new ETF needed today.</div>
+</section>
+
+<section id="hdfc" class="panel">
+  <span class="label green">Active SIPs</span>
+  <div class="card"><table>
+    <tr><th>Fund</th><th class="num">Current Value</th><th class="num">SIP</th><th>Status</th></tr>
+    <tr><td>HDFC Flexi Cap</td><td class="num">~₹1.27L</td><td class="num">₹5,000</td><td><span class="badge green">Core</span></td></tr>
+    <tr><td>HDFC Mid Cap</td><td class="num">~₹12k</td><td class="num">₹5,000</td><td><span class="badge green">Growth</span></td></tr>
+    <tr><td>HDFC Small Cap</td><td class="num">~₹12k</td><td class="num">₹5,000</td><td><span class="badge green">Alpha</span></td></tr>
+    <tr><td>HDFC Defence</td><td class="num">~₹10k</td><td class="num">₹5,000</td><td><span class="badge amber">Tactical</span></td></tr>
+    <tr class="total"><td>Total SIP</td><td></td><td class="num">₹20,000</td><td></td></tr>
+  </table></div>
+</section>
+
+<section id="mosl" class="panel">
+  <div class="card">
+    <h2>Motilal Oswal — Direct Stock Alpha Bucket</h2>
+    <table>
+      <tr><th>Stock / Bucket</th><th>Role</th><th>Status</th></tr>
+      <tr><td>HDFC Bank</td><td>Core financial compounder</td><td><span class="badge green">Accumulate</span></td></tr>
+      <tr><td>Bajaj Finance</td><td>Growth financial</td><td><span class="badge green">Accumulate</span></td></tr>
+      <tr><td>L&T</td><td>India capex proxy</td><td><span class="badge green">Accumulate on dips</span></td></tr>
+      <tr><td>BEL / HAL / Data Patterns</td><td>Defence and manufacturing</td><td><span class="badge amber">Watch valuation</span></td></tr>
+      <tr><td>Suzlon / Syrma / Waaree</td><td>High-growth satellite</td><td><span class="badge amber">Position size control</span></td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="global" class="panel">
+  <div class="grid">
+    <div class="card accent"><div class="stat-title">eToro</div><div class="stat-value">~$29,971</div><div class="small">NVDA, QQQ, VTI, GOOG, PLTR, CSPX</div></div>
+    <div class="card accent"><div class="stat-title">IBKR</div><div class="stat-value">~$20,986</div><div class="small">VWRA, SMH, DFND, EQQQ, AVGO, GOOG</div></div>
+    <div class="card accent"><div class="stat-title">Belong</div><div class="stat-value">~$2,040</div><div class="small">Tata Dynamic + FD</div></div>
+    <div class="card accent"><div class="stat-title">Monthly Plan</div><div class="stat-value">$1k+</div><div class="small">$500 Belong + $500 IBKR minimum</div></div>
+  </div>
+  <div class="card"><h3>Global Action</h3><p>Fresh money priority: IBKR first, Belong second, eToro hold-only for now.</p></div>
+</section>
+
+<section id="uae" class="panel">
+  <div class="card"><table>
+    <tr><th>Asset / Liability</th><th class="num">Value</th><th>Status</th></tr>
+    <tr><td>UAE Bank Cash</td><td class="num">AED 89k</td><td><span class="badge amber">Build to AED 100–150k</span></td></tr>
+    <tr><td>Credit Card Outstanding</td><td class="num">AED 40k</td><td><span class="badge red">Clear by year-end</span></td></tr>
+    <tr><td>Property Value</td><td class="num">AED 1.9–2.1m</td><td><span class="badge green">Co-owned</span></td></tr>
+    <tr><td>Mortgage Outstanding</td><td class="num">AED 400k</td><td><span class="badge amber">Covered by EMI</span></td></tr>
+    <tr><td>Personal Property Equity</td><td class="num">~AED 800k</td><td><span class="badge green">50% counted</span></td></tr>
+  </table></div>
+</section>
+
+<section id="actions" class="panel">
+  <div class="card redline">
+    <h2>Flagged Actions — Proposed Only, Not Executed</h2>
+    <table>
+      <tr><th>Action</th><th class="num">Amount</th><th>Rationale</th></tr>
+      <tr><td>Sell ICIPSE</td><td class="num">₹22,427</td><td>Weak ETF, no SIP, weak thesis</td></tr>
+      <tr><td>Sell ICIGOL NRE</td><td class="num">₹24,552</td><td>Duplicate gold exposure</td></tr>
+      <tr><td>Sell ICIGOL NRO</td><td class="num">₹23,436</td><td>Duplicate gold exposure</td></tr>
+      <tr class="total"><td>Redeploy to HDFC funds</td><td class="num">₹70,415</td><td>Flexi ₹35k / Mid ₹20k / Small ₹15k</td></tr>
+    </table>
+  </div>
+
+  <div class="grid two">
+    <div class="card"><h3>🔴 High Priority</h3>
+      <div class="action-item"><div><div class="action-title">Clear credit card</div><div class="small">Reduce financial drag before adding new risk.</div></div><span class="tag red">2026</span></div>
+      <div class="action-item"><div><div class="action-title">SIP step-up planning</div><div class="small">Prepare 10% increase from Jan 2027.</div></div><span class="tag red">Jan 2027</span></div>
+    </div>
+    <div class="card"><h3>🟡 Medium Priority</h3>
+      <div class="action-item"><div><div class="action-title">ETF clean-up</div><div class="small">Simplify duplicates and weak ETFs.</div></div><span class="tag amber">Decide</span></div>
+      <div class="action-item"><div><div class="action-title">Deploy NRO cash</div><div class="small">Only during correction, not at any price.</div></div><span class="tag amber">Wait</span></div>
+    </div>
+    <div class="card"><h3>🟢 Low Priority</h3>
+      <div class="action-item"><div><div class="action-title">Review legacy ICICI funds</div><div class="small">Consolidate later, no urgency.</div></div><span class="tag green">Later</span></div>
+    </div>
+    <div class="card"><h3>✅ Completed</h3>
+      <div class="action-item"><div><div class="action-title">Added HDFC Flexi Cap</div><div class="small">Improves core equity bucket.</div></div><span class="tag green">Done</span></div>
+      <div class="action-item"><div><div class="action-title">Stopped Nippon Small Cap</div><div class="small">Avoided duplication with HDFC Small Cap.</div></div><span class="tag green">Done</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="calc" class="panel">
+  <div class="card">
+    <h2>Compound Growth Calculator</h2>
+    <div class="formgrid">
+      <label>Starting Corpus<input id="corpus" type="number" value="4200000"></label>
+      <label>Monthly SIP<input id="sip" type="number" value="121000"></label>
+      <label>Annual Return %<input id="rate" type="number" value="14"></label>
+      <label>Annual SIP Step-up %<input id="step" type="number" value="10"></label>
+      <label>Years<input id="years" type="number" value="9"></label>
+      <label>Deployable Cash<input id="cash" type="number" value="0"></label>
+    </div><br>
+    <button class="primary" onclick="project()">Project</button>
+  </div>
+  <div class="grid" id="results"></div>
+</section>
+</main>
+
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function formatINR(n){
+  n=Number(n);
+  if(n>=10000000)return "₹"+(n/10000000).toFixed(2)+"Cr";
+  if(n>=100000)return "₹"+(n/100000).toFixed(1)+"L";
+  return "₹"+Math.round(n).toLocaleString("en-IN");
+}
+function project(){
+  const P=Number(document.getElementById('corpus').value)+Number(document.getElementById('cash').value);
+  const PMT=Number(document.getElementById('sip').value);
+  const annual=Number(document.getElementById('rate').value)/100;
+  const stepAnnual=Number(document.getElementById('step').value)/100;
+  const years=Number(document.getElementById('years').value);
+  const r=annual/12, n=years*12, g=Math.pow(1+stepAnnual,1/12)-1;
+  const fvLump=P*Math.pow(1+r,n);
+  let fvSip;
+  if(Math.abs(r-g)<0.0000001){fvSip=PMT*(1+r)*n*Math.pow(1+r,n-1);}
+  else{fvSip=PMT*(1+r)*(Math.pow(1+r,n)-Math.pow(1+g,n))/(r-g);}
+  const total=fvLump+fvSip;
+  const invested=P+PMT*n;
+  const goal=100000000;
+  const gap=total-goal;
+  document.getElementById('results').innerHTML=[
+    ["Projected Total",formatINR(total)],
+    ["Corpus Growth Alone",formatINR(fvLump)],
+    ["SIP Contribution Growth",formatINR(fvSip)],
+    ["Total Invested",formatINR(invested)],
+    ["Total Gain",formatINR(total-invested)],
+    [gap>=0?"Surplus to ₹10Cr":"Gap to ₹10Cr",formatINR(Math.abs(gap))]
+  ].map(x=>`<div class="card accent"><div class="stat-title">${x[0]}</div><div class="stat-value">${x[1]}</div></div>`).join("");
+}
+project();
+</script>
+</body>
+</html>
